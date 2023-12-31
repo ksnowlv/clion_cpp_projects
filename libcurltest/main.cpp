@@ -1,5 +1,6 @@
 
 #include "CurlTest.h"
+#include <memory>
 
 using namespace std;
 

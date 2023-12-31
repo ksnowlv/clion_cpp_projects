@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.26)
+cmake_minimum_required(VERSION 3.16)
 project(libcurltest)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -9,7 +9,6 @@ find_path(CURL_INCLUDE_DIR curl/curl.h)
 find_library(CURL_LIBRARY NAMES curl)
 include_directories(${CURL_INCLUDE_DIR}
                     lib)
-
 
 add_executable(libcurltest main.cpp
         CurlTest.h

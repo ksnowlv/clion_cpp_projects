@@ -1,3 +1,0 @@
-/Users/lvwei/Documents/cpp_projects/libcurltest/cmake-build-debug/CMakeFiles/libcurltest.dir
-/Users/lvwei/Documents/cpp_projects/libcurltest/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/lvwei/Documents/cpp_projects/libcurltest/cmake-build-debug/CMakeFiles/rebuild_cache.dir

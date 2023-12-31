@@ -16,7 +16,7 @@
 using namespace rapidjson;
 using namespace std;
 
-static const char *KAPIHome = "http://127.0.0.1:8081/user/home";
+static const char *KAPIHome = "https://www.baidu.com";
 static const char *KAPIUserLogin = "http://127.0.0.1:8081/user/login";
 
 CurlTest::CurlTest()
@@ -98,7 +98,7 @@ void CurlTest::testCurlhttpGet() {
             cout<<"response header:"<<responseHeader<<endl;
             // 响应数据存储在 responseData 中，可以进行解析或处理
             cout << "Response received:" << responseData<<std::endl;
-            handleCurlGetJsonParse(responseData);
+//            handleCurlGetJsonParse(responseData);
         }
 
         // 清理 curl 资源
