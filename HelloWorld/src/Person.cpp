@@ -13,6 +13,6 @@ Person::~Person() {
 
 }
 
-void Person::ShowInfomation() const {
-    std::cout<<"name:"<<m_name<<",age:"<<m_age<<std::endl;
+void Person::showInfomation() const {
+    std::cout << "name:" << m_name << ",age:" << m_age << std::endl;
 }

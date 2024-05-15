@@ -2,29 +2,33 @@
 #define PROCESS_TEST_H
 
 
-#include "BaseTest.h"
+#include "BaseTest.hpp"
 
 
-class ProcessTest: public BaseTest {
+class ProcessTest : public BaseTest {
 
 public:
     ProcessTest();
+
     ~ProcessTest();
 
 public:
-    void Test() override;
+    void test() override;
 
 private:
-    void ProcessCreate();
-    void SignalTest();
-    static void Ouch(const int sig);
-    
-    void AlarmTest();
-    static void AlarmCallBack(const int sig);
-    
-    void SharedMemoryTest();
+    void processCreate();
 
-    void MessageQueueTest();
+    void signalTest();
+
+    static void ouch(const int sig);
+
+    void alarmTest();
+
+    static void alarmCallBack(const int sig);
+
+    void sharedMemoryTest();
+
+    void messageQueueTest();
 
 private:
     static int s_AlarmFired;

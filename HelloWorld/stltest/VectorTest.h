@@ -2,24 +2,26 @@
 #define VECTORTEST_H
 
 #pragma once
+
 #include <vector>
+
 using namespace std;
 
-#include "BaseTest.h"
+#include "BaseTest.hpp"
 
-class VectorTest: public BaseTest
-{
+class VectorTest : public BaseTest {
 public:
     VectorTest();
+
     ~VectorTest();
 
 public:
-    void Test() override;
+    void test() override;
 
 private:
-    void ShowInfomation(const vector<int> &v);
-    void findTest(vector<int> &v);
+    void showInfomation(const vector<int> &v);
 
+    void findTest(vector<int> &v);
 };
 
 #endif

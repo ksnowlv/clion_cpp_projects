@@ -25,11 +25,11 @@ ProcessTest::~ProcessTest() {
 }
 
 
-void ProcessTest::Test() {
+void ProcessTest::test() {
     // processCreate();
     // signalTest();
     // alarmTest();
-    SharedMemoryTest();
+    sharedMemoryTest();
     //MessageQueueTest();
 }
 
@@ -44,175 +44,175 @@ fork() 比较特别，因为它会返回两次，也就是说会有两个返回�
 将PID为1的进程（init）作为自己的父进程，由init进程接管。
  *
  */
-void ProcessTest::ProcessCreate() {
+void ProcessTest::processCreate() {
 
     auto localValue = 10;
 
     pid_t childPid = fork();
 
     switch (childPid) {
-    case -1:
-        std::cout << "failed to fork!!!" << std::endl;
-        exit(-1);
+        case -1:
+            std::cout << "failed to fork!!!" << std::endl;
+            exit(-1);
 
-    case 0://表示创建子进程成功
-        cout<<"child process id:"<<getpid()<<endl;
-        cout<<"global value:"<<(++g_value)<<endl;
-        cout<<"local value:"<<++localValue<<endl;
-        cout<<"----------"<<endl;
-        sleep(5);
-        cout<<"child process exit"<<endl;
-        exit(0);
-        break;
-
-    default:
-        cout<<"parent process id:"<<getpid()<<endl;
-        cout<<"global value:"<<(++g_value)<<endl;
-        cout<<"local value:"<<++localValue<<endl;
-        cout<<"----------"<<endl;
-        int stat = -1;
-        pid_t pid = wait(&stat);
-        cout<<"child has finished:pid="<<pid<<endl;
-        //WIFEXITED(stat)若此值为非0 表明进程正常结束；若该宏为真，此时可通过WEXITSTATUS(status)获取进程退出状态(exit时参数)
-        if (WIFEXITED(stat)){
-            cout<<" child exited with code:"<<WEXITSTATUS(stat) <<endl;
-        } else if (WIFSIGNALED(stat)) {// WIFSIGNALED(status)为非0 表明进程异常终止,此时可通过WTERMSIG(status)获取使得进程退出的信号编号
-            cout<<"使得进程退出的信号编号:"<<WIFSIGNALED(stat)<<endl;
-        } else {
-            cout<<" child terminated abnormally!"<<endl;
-        }
-        while (1) {
-            sleep(10);
-            cout<<"parent process continue"<<endl;
+        case 0://表示创建子进程成功
+            cout << "child process id:" << getpid() << endl;
+            cout << "global value:" << (++g_value) << endl;
+            cout << "local value:" << ++localValue << endl;
+            cout << "----------" << endl;
+            sleep(5);
+            cout << "child process exit" << endl;
+            exit(0);
             break;
-        }
-        break;
+
+        default:
+            cout << "parent process id:" << getpid() << endl;
+            cout << "global value:" << (++g_value) << endl;
+            cout << "local value:" << ++localValue << endl;
+            cout << "----------" << endl;
+            int stat = -1;
+            pid_t pid = wait(&stat);
+            cout << "child has finished:pid=" << pid << endl;
+            //WIFEXITED(stat)若此值为非0 表明进程正常结束；若该宏为真，此时可通过WEXITSTATUS(status)获取进程退出状态(exit时参数)
+            if (WIFEXITED(stat)) {
+                cout << " child exited with code:" << WEXITSTATUS(stat) << endl;
+            } else if (WIFSIGNALED(stat)) {// WIFSIGNALED(status)为非0 表明进程异常终止,此时可通过WTERMSIG(status)获取使得进程退出的信号编号
+                cout << "使得进程退出的信号编号:" << WIFSIGNALED(stat) << endl;
+            } else {
+                cout << " child terminated abnormally!" << endl;
+            }
+            while (1) {
+                sleep(10);
+                cout << "parent process continue" << endl;
+                break;
+            }
+            break;
     }
 }
 
-void ProcessTest::SignalTest() {
+void ProcessTest::signalTest() {
 
-    cout<<"--------signal test-----"<<endl;
-    signal(SIGINT, ProcessTest::Ouch);
+    cout << "--------signal test-----" << endl;
+    signal(SIGINT, ProcessTest::ouch);
 
     int count = 0;
     while (++count > 5) {
-        cout<<"Hello world!!!"<<endl;
+        cout << "Hello world!!!" << endl;
         sleep(2);
     }
 }
-void ProcessTest::Ouch(const int sig) {
-    cout<<"O! i got signal:"<<sig<<endl;
+
+void ProcessTest::ouch(const int sig) {
+    cout << "O! i got signal:" << sig << endl;
 }
 
 // alarm
 int ProcessTest::s_AlarmFired = 0;
 
-void ProcessTest::AlarmTest() {
-    cout<<"---alarm application start---"<<endl;
+void ProcessTest::alarmTest() {
+    cout << "---alarm application start---" << endl;
     pid_t pid = fork();
     pid_t childPid;
     if (pid == -1) {
-        cout<<"fork fail!!!"<<endl;
+        cout << "fork fail!!!" << endl;
     } else if (pid == 0) {
         sleep(5);
         childPid = getpid();
         pid_t ppid = getppid();
-        cout<<"child process id:"<<childPid<<"----parent process id:"<<ppid<<endl;
+        cout << "child process id:" << childPid << "----parent process id:" << ppid << endl;
         int res = kill(ppid, SIGALRM);
     }
 
     //cout<<"alarm_fired:"<<alarm_fired<<",pid:"<<getpid()<<endl;
 
-    signal(SIGALRM, ProcessTest::AlarmCallBack);
+    signal(SIGALRM, ProcessTest::alarmCallBack);
     pause();
-    if (ProcessTest::s_AlarmFired > 0){
-        cout<<"alarm Call Back"<<endl;
+    if (ProcessTest::s_AlarmFired > 0) {
+        cout << "alarm Call Back" << endl;
     }
 }
 
-void ProcessTest::AlarmCallBack(const int sig) {
+void ProcessTest::alarmCallBack(const int sig) {
     ProcessTest::s_AlarmFired = 1;
 }
 
-void ProcessTest::SharedMemoryTest() {
-    cout<<__func__<<endl;
+void ProcessTest::sharedMemoryTest() {
+    cout << __func__ << endl;
     const int sharedMemorySize = 1024;
     const int keyId = 256;
-    const char* sharedText = "Hello world!";
+    const char *sharedText = "Hello world!";
     pid_t pid = fork();
 
     if (pid == -1) {
-        cout<<"fork fail!!!"<<endl;
+        cout << "fork fail!!!" << endl;
         return;
     } else if (pid == 0) {
         //获取唯一的key值
         key_t key = ftok("/", keyId);
         //创建或打开一块共享内存
-        int shmId = shmget(key, sharedMemorySize, IPC_CREAT|0666);
+        int shmId = shmget(key, sharedMemorySize, IPC_CREAT | 0666);
         if (shmId == -1) {
-            cout<<"create shared memory fail!"<<endl;
+            cout << "create shared memory fail!" << endl;
             return;
         }
-        cout<<"child process pid:"<<getpid()
-            <<",parent process pid:"<<getppid()
-            <<",key="<<key
-            <<",shmid:"<<shmId<<endl;
+        cout << "child process pid:" << getpid()
+             << ",parent process pid:" << getppid()
+             << ",key=" << key
+             << ",shmid:" << shmId << endl;
         //将一块共享内存映射到调用进程的数据段中
-        char* buf = (char*)shmat(shmId, nullptr, 0);
+        char *buf = (char *) shmat(shmId, nullptr, 0);
         memcpy(buf, sharedText, strlen(sharedText));
-        cout<<"write buf:"<<buf<<endl;
+        cout << "write buf:" << buf << endl;
         //将共享内存和当前进程分离(仅仅是断开联系并不删除共享内存)
         shmdt(buf);
     } else if (pid > 0) {
-        cout<<"----pid:"<<pid<<endl;
+        cout << "----pid:" << pid << endl;
         key_t key = ftok("/", keyId);
-        int shmId = shmget(key, sharedMemorySize, IPC_CREAT|0666);
+        int shmId = shmget(key, sharedMemorySize, IPC_CREAT | 0666);
         if (shmId == -1) {
-            cout<<"create shared memory fail!"<<endl;
+            cout << "create shared memory fail!" << endl;
             return;
         }
-        cout<<"parent process pid:"<<getpid()<<",key="<<key<<",shmid:"<<shmId<<endl;
-        const char* buf = (char*)shmat(shmId, nullptr, 0);
-        cout<<"read buf:"<<buf<<endl;
+        cout << "parent process pid:" << getpid() << ",key=" << key << ",shmid:" << shmId << endl;
+        const char *buf = (char *) shmat(shmId, nullptr, 0);
+        cout << "read buf:" << buf << endl;
         shmdt(buf);
         pid_t resPid = wait(nullptr);
-        cout<<resPid<<endl;
+        cout << resPid << endl;
     }
 }
 
-struct MsgBuf
-{
+struct MsgBuf {
     long m_Type;
     char m_data[256];
 };
 
-void ProcessTest::MessageQueueTest() {
+void ProcessTest::messageQueueTest() {
     sleep(2);
-    cout<<"----"<<__func__<<endl;
+    cout << "----" << __func__ << endl;
     const int sharedMemorySize = 1024;
     const int keyId = 256;
-    const char* sharedText = "Hello world!";
+    const char *sharedText = "Hello world!";
     const int msgType = 1;
 
     pid_t pid = fork();
 
     if (pid == -1) {
-        cout<<"fork fail!!!"<<endl;
+        cout << "fork fail!!!" << endl;
         return;
     } else if (pid == 0) {
         //获取唯一的key值
         key_t key = ftok("/", keyId);
         //创建或打开消息队列
-        int msgId = msgget(key, IPC_CREAT|0666);
+        int msgId = msgget(key, IPC_CREAT | 0666);
         if (msgId == -1) {
-            cout<<"create msg fail!"<<endl;
+            cout << "create msg fail!" << endl;
             return;
         }
-        cout<<"child process pid:"<<getpid()
-            <<",parent process pid:"<<getppid()
-            <<",key="<<key
-            <<",msgId:"<<msgId<<endl;
+        cout << "child process pid:" << getpid()
+             << ",parent process pid:" << getppid()
+             << ",key=" << key
+             << ",msgId:" << msgId << endl;
         //将一块共享内存映射到调用进程的数据段中
 
         int count = 0;
@@ -225,13 +225,12 @@ void ProcessTest::MessageQueueTest() {
             int res = msgsnd(msgId, &msgBuf, sizeof(msgBuf.m_data), IPC_NOWAIT);
 
             if (res == -1) {
-                cout<<"send message fail!"<<endl;
+                cout << "send message fail!" << endl;
                 return;
             }
             sleep(2);
 
-            if (++count > 10)
-            {
+            if (++count > 10) {
                 break;
             }
         }
@@ -242,25 +241,25 @@ void ProcessTest::MessageQueueTest() {
     } else if (pid > 0) {
 
         key_t key = ftok("/", keyId);
-        int msgId = msgget(key, IPC_CREAT|0666);
+        int msgId = msgget(key, IPC_CREAT | 0666);
         if (msgId == -1) {
-            cout<<"create msg fail!"<<endl;
+            cout << "create msg fail!" << endl;
             return;
         }
 
-        cout<<"----pid:"<<pid<<",msgid:"<<msgId<<endl;
+        cout << "----pid:" << pid << ",msgid:" << msgId << endl;
 
         while (true) {
             struct MsgBuf msgBuf;
             int res = msgrcv(msgId, &msgBuf, sizeof(msgBuf.m_data), msgType, IPC_NOWAIT);
-            if (res == -1){
-                cout<<"rev message fail!"<<endl;
+            if (res == -1) {
+                cout << "rev message fail!" << endl;
                 sleep(1);
-            }else {
-                cout<<"rev msg type:"<<msgBuf.m_Type<<" rev msg:" <<msgBuf.m_data<<endl;
+            } else {
+                cout << "rev msg type:" << msgBuf.m_Type << " rev msg:" << msgBuf.m_data << endl;
             }
         }
         pid_t resPid = wait(nullptr);
-        cout<<"##########"<<resPid<<endl;
+        cout << "##########" << resPid << endl;
     }
 }

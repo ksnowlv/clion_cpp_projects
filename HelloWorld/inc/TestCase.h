@@ -3,20 +3,27 @@
 
 #include <memory>
 #include <vector>
+
 using namespace std;
 
-#include "BaseTest.h"
+#include "BaseTest.hpp"
 
 class TestCase {
 public:
     TestCase();
+
     ~TestCase();
 
 public:
-    void TestMyCase();
+    void testMyCase();
 
 private:
-    void Init();
+    void init();
+
+    void initSTL();
+
+    void initMultiThread();
+
 private:
     vector<unique_ptr<BaseTest>> m_vector;
 };

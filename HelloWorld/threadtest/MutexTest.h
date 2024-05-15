@@ -4,9 +4,10 @@
 #pragma once
 
 #include <mutex>
+
 using namespace std;
 
-#include "BaseTest.h"
+#include "BaseTest.hpp"
 
 /*
 std::mutex，最基本的 Mutex 类。
@@ -18,25 +19,29 @@ std::shared_timed_mutex，限时读写锁（C++14）
 std::shared_mutex，读写锁（C++17）
 */
 
-class MutexTest: public BaseTest
-{
+class MutexTest : public BaseTest {
 public:
     MutexTest();
+
     ~MutexTest();
 
 public:
-    void Test() override;
+    void test() override;
 
 private:
-    void TestMutex();
-    static void CalCount(MutexTest& t, const int threadid);
+    void testMutex();
 
-    void TestRecursiveMutex();
-    void TestTimeMutex();
-    static void TimeMutextTask(MutexTest& t, const int threadid);
+    static void calCount(MutexTest &t, const int threadid);
 
-    void TestTwoLock();
-    void TestLockGuard();
+    void testRecursiveMutex();
+
+    void testTimeMutex();
+
+    static void timeMutextTask(MutexTest &t, const int threadid);
+
+    void testTwoLock();
+
+    void testLockGuard();
 
 private:
 

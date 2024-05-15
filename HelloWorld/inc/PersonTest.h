@@ -4,7 +4,7 @@
 #include "Person.h"
 #pragma once
 
-#include "BaseTest.h"
+#include "BaseTest.hpp"
 
 class PersonTest: public BaseTest
 {
@@ -13,7 +13,7 @@ public:
     ~PersonTest();
 
 public:
-    void Test() override;
+    void test() override;
 private:
 
 };

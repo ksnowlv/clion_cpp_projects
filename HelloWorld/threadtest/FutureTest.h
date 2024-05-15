@@ -4,26 +4,31 @@
 #pragma once
 
 #include <string>
+
 using namespace std;
 
-#include "BaseTest.h"
+#include "BaseTest.hpp"
 
 
-class FutureTest: public BaseTest
-{
+class FutureTest : public BaseTest {
 public:
     FutureTest();
+
     ~FutureTest();
 
 public:
-    void Test() override;
+    void test() override;
 
 private:
-    static int ProcessBigDataTest(const int number1, const int number2);
-    void ShowMyInfomation(const string& s);
-    void TestAsync();
-    void TestPackagedTask();
-    void TestPromise();
+    static int processBigDataTest(const int number1, const int number2);
+
+    void showMyInfomation(const string &s);
+
+    void testAsync();
+
+    void testPackagedTask();
+
+    void testPromise();
 
 };
 

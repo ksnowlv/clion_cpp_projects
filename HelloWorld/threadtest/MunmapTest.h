@@ -5,16 +5,17 @@
 #ifndef HELLOWORLD_MUNMAPTEST_H
 #define HELLOWORLD_MUNMAPTEST_H
 
-#include "BaseTest.h"
+#include "BaseTest.hpp"
 
 class MunmapTest : public BaseTest {
 
 public:
     MunmapTest();
+
     ~MunmapTest();
 
 public:
-    virtual void Test() override;
+    virtual void test() override;
 };
 
 

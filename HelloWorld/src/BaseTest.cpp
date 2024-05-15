@@ -1,5 +1,6 @@
-#include "BaseTest.h"
+#include "BaseTest.hpp"
 #include <iostream>
+
 using namespace std;
 
 
@@ -8,12 +9,12 @@ BaseTest::BaseTest() {
 }
 
 BaseTest::~BaseTest() {
-   
-   cout<<"*****"<<endl;
-    
+
+    cout << "*****" << endl;
+
 }
 
-void BaseTest::Test() {
-    
+void BaseTest::test() {
+
 }
 

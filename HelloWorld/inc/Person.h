@@ -2,32 +2,37 @@
 #define PERSON_H
 
 #include <string>
+
 using namespace std;
 
 class Person {
 public:
     Person();
+
     Person(const int age);
-    Person(const Person& person) = default;
+
+    Person(const Person &person) = default;
+
     ~Person();
 
 public:
-    inline const std::string &GetName() const {
+    inline const std::string &getName() const {
         return m_name;
     }
-    inline void SetName(const std::string &name) {
+
+    inline void setName(const std::string &name) {
         m_name = name;
     }
 
-    inline constexpr int GetAge() const {
+    inline constexpr int getAge() const {
         return m_age;
     }
 
-    inline void SetAge(const int age) {
+    inline void setAge(const int age) {
         m_age = age;
     }
 
-    void ShowInfomation() const;
+    void showInfomation() const;
 
 private:
     string m_name;
