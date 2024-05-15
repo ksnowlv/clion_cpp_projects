@@ -18,6 +18,7 @@ public:
 
 private:
     void ShowInfomation(const vector<int> &v);
+    void findTest(vector<int> &v);
 
 };
 
