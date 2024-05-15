@@ -48,7 +48,7 @@ void MunmapTest::Test() {
         sleep(2);  // 等待父进程写入数据
 
         std::cout<<"Child process: shared_data ="<<std::to_string(*shared_data)<<std::flush<<std::endl;
-        std::cout<<"Child process: shared_data2 ="<<std::to_string(*(shared_data + 1))<<std::flush;;
+        std::cout<<"Child process: shared_data2 ="<<std::to_string(*(shared_data + 1))<<std::flush<<std::endl;
     } else if (pid > 0) {
         // 父进程
         *shared_data = 1234;
