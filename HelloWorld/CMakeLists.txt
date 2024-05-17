@@ -52,6 +52,7 @@ include_directories(
     ./processtest/inc #processtest目录头文件
     ./stltest #stltest目录头文件
     ./threadtest #threadtest目录头文件
+    ./sorttest
 )
 
 MESSAGE(STATUS "root cmakelist.txt processtest头文件路径 :${PROCESS_TEST_INC_DIR}")
@@ -61,6 +62,7 @@ aux_source_directory(.  SRC_LIST)
 aux_source_directory(./src SRC_LIST)
 aux_source_directory(./stltest  SRC_LIST)
 aux_source_directory(./threadtest  SRC_LIST)
+aux_source_directory(./sorttest  SRC_LIST)
 
 #生成应用程序 helloworld
 add_executable(${PROJECT_NAME} ${SRC_LIST})

@@ -24,6 +24,8 @@ private:
 
     void initMultiThread();
 
+    void initSort();
+
 private:
     vector<unique_ptr<BaseTest>> m_vector;
 };

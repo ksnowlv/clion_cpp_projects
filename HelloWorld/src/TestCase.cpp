@@ -14,6 +14,7 @@
 #include "ListTest.hpp"
 #include "QueueTest.hpp"
 #include "StackTest.hpp"
+#include "SortTest.hpp"
 
 
 TestCase::TestCase() {
@@ -36,6 +37,7 @@ void TestCase::init() {
     m_vector.emplace_back(std::move(personTest));
 
     initSTL();
+    initSort();
     initMultiThread();
 }
 
@@ -76,4 +78,9 @@ void TestCase::initMultiThread() {
     unique_ptr<MunmapTest> munmapTest(make_unique<MunmapTest>());
     m_vector.emplace_back(std::move(munmapTest));
 
+}
+
+void TestCase::initSort() {
+    unique_ptr<SortTest> sortTest(make_unique<SortTest>());
+    m_vector.emplace_back(std::move(sortTest));
 }
